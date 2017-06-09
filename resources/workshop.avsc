@@ -1,0 +1,12 @@
+{
+              "name": "movie_review",
+              "type": "record",
+              "fields": [
+                { "name": "timestamp", "type": "long" },
+                { "name": "email", "type": "string" },
+                { "name": "movie", "type": "string" },
+                { "name": "tags", "type": "string" },
+                { "name": "comment", "type": "string"},
+                { "name": "rating", "type": "int"}
+              ]
+            }
