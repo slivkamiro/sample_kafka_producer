@@ -4,8 +4,8 @@ from threading import Timer
 from time import time
 from confluent_kafka import avro
 from confluent_kafka.avro import AvroProducer
-from random import randint
-from sample_source_props import random_movie, random_email_addr, random_tags, random_sentence
+from random import randint, random
+from sample_source_props import random_movie, random_series, random_user, random_tags, random_sentence
 
 
 class PeriodicProducer(object):
@@ -20,15 +20,35 @@ class PeriodicProducer(object):
         self.end_time = 0
         self.producer = AvroProducer(config, default_value_schema=value_schema)
 
+    def __get_props(self):
+        if random() > 0.5:
+            p = random_movie()
+            return {
+                'title': p[0],
+                'properties': {
+                    'release_year': p[1]
+                }
+            }
+        else:
+            p = random_series()
+            return {
+                'title': p[0],
+                'properties': {
+                    'seasons': p[1]
+                }
+            }
+
     def __loop__(self):
         now = int(time())
+        props = self.__get_props()
         document = {
             'timestamp': now,
-            'email': random_email_addr(),
-            'movie': random_movie(),
+            'user': random_user(),
+            'title': props['title'],
             'tags': random_tags(),
             'comment': random_sentence(),
-            'rating': randint(0, 9)
+            'rating': randint(0, 9),
+            'properties': props['properties']
         }
         print 'Sending {0} to kafka.'.format(document)
         self.producer.produce(topic=self.topic, value=document)
