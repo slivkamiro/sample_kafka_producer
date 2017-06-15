@@ -1,0 +1,22 @@
+{
+  "input": {
+    "kafka": "workshop"
+  },
+  "output": {
+    "elasticsearch": {
+      "alias": "reviews",
+      "version": 1
+    }
+  },
+  "action": {
+    "select": {
+      "columns": {
+        "exclude": ["comment"]
+      }
+    },
+    "cast": {
+      "timestamp": { "datetime": { "format": "epoch_seconds"}},
+      "tags": { "seq-string": { "separators": ","}}
+    }
+  }
+}

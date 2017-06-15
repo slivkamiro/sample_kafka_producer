@@ -1,0 +1,16 @@
+{
+  "input": {
+    "kafka": "favourite_movies"
+  },
+  "output": {
+    "elasticsearch": {
+      "alias": "favourite_movies",
+      "version": 1
+    }
+  },
+  "action": {
+     "cast": {
+       "timestamp": { "datetime": {}}
+     }
+  }
+}

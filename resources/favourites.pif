@@ -1,0 +1,21 @@
+{
+  "input": {
+    "kafka": "workshop"
+  },
+  "output": {
+    "kafka": "favourite_movies"
+  },
+  "action": {
+    "cube": {
+      "dimensions": ["title"],
+      "time": {
+        "dimension": "timestamp",
+        "granularity": "P1D",
+        "format": "epoch_seconds"
+      },
+      "measures": [
+        { "sum": { "field": "rating", "name": "today_rating" }}
+      ]
+    }
+  }
+}
